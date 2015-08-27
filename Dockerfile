@@ -15,12 +15,12 @@ COPY conf/logstash.repo /etc/yum.repos.d/logstash.repo
 RUN rpm --import http://packages.elasticsearch.org/GPG-KEY-elasticsearch
 RUN yum -y install java-1.7.0-openjdk logstash-1.5.3 
 
-# Install journald plugin
-RUN yum -y install git rubygems
-RUN git clone https://github.com/stuart-warren/logstash-input-journald.git && \
-cd logstash-input-journald && \
-gem build logstash-input-journald.gemspec && \
-/opt/logstash/bin/plugin install logstash-input-journald-0.0.2.gem
+## Install journald plugin
+#RUN yum -y install git rubygems
+#RUN git clone https://github.com/stuart-warren/logstash-input-journald.git && \
+#cd logstash-input-journald && \
+#gem build logstash-input-journald.gemspec && \
+#/opt/logstash/bin/plugin install logstash-input-journald-0.0.2.gem
 
 # Setup logstash config
 COPY conf/*.conf /etc/logstash/conf.d/

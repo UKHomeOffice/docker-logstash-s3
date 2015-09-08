@@ -5,10 +5,11 @@ ENV ACCESS_KEY_ID WHOCARES
 ENV SECRET_ACCESS_KEY THISISMYRLYMYAMZNSECRET
 ENV ENDPOINT_REGION eu-west-1
 ENV BUCKET commons-dev-logs
-ENV SIZE_FILE 204800
+ENV SIZE_FILE 20480
 ENV TIME_FILE 60
 ENV FORMAT plain
 ENV CANNED_ACL private
+ENV USE_SSL true
 
 # Install logstash
 COPY conf/logstash.repo /etc/yum.repos.d/logstash.repo
@@ -26,4 +27,4 @@ gem build logstash-input-journald.gemspec && \
 COPY conf/*.conf /etc/logstash/conf.d/
 
 # Run logstash agent.  Pass in s3 config so we can define at runtime.  Mostly done so we don't need to store credentials.
-CMD /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d/ -e "output { s3{ access_key_id => \"$ACCESS_KEY_ID\" secret_access_key => \"$SECRET_ACCESS_KEY\" region => \"$ENDPOINT_REGION\" bucket => \"$BUCKET\" size_file => \"$SIZE_FILE\" time_file => \"$TIME_FILE\" canned_acl => \"$CANNED_ACL\" } }"
+CMD /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d/ -e "output { s3{ access_key_id => \"$ACCESS_KEY_ID\" secret_access_key => \"$SECRET_ACCESS_KEY\" region => \"$ENDPOINT_REGION\" bucket => \"$BUCKET\" size_file => \"$SIZE_FILE\" time_file => \"$TIME_FILE\" canned_acl => \"$CANNED_ACL\" use_ssl => \"$USE_SSL\" } }"
